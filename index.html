@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Application Inscription</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<script>
+
+function showTab(tabName)
+{
+    document.getElementById("add").style.display = "none";
+    document.getElementById("list").style.display = "none";
+
+    document.getElementById(tabName).style.display = "block";
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>APPLICATION INSCRIPTION ECOLE</h1>
+
+</div>
+
+<div class="container">
+
+<div class="tabs">
+
+<button class="tab-button" onclick="showTab('add')">
+
+Ajouter Eleve
+
+</button>
+
+<button class="tab-button" onclick="showTab('list')">
+
+Liste Eleves
+
+</button>
+
+</div>
+
+<!-- ONGLET AJOUT -->
+
+<div id="add" class="tab-content">
+
+<h2>Ajouter Eleve</h2>
+
+<form method="POST" action="/add_eleve">
+
+<input type="text" name="nom" placeholder="Nom" required>
+
+<input type="text" name="postnom" placeholder="Postnom" required>
+
+<input type="text" name="prenom" placeholder="Prenom" required>
+
+<input type="date" name="date_naissance">
+
+<input type="text" name="nom_pere" placeholder="Nom du pere">
+
+<input type="text" name="nom_mere" placeholder="Nom de la mere">
+
+<input type="text" name="telephone" placeholder="Telephone">
+
+<input type="text" name="classe" placeholder="Classe">
+
+<input type="text" name="section" placeholder="Section">
+
+<select name="frais">
+
+<option>Payé</option>
+
+<option>Non payé</option>
+
+</select>
+
+<br><br>
+
+<button type="submit">
+
+Inscrire
+
+</button>
+
+</form>
+
+</div>
+
+<!-- ONGLET LISTE -->
+
+<div id="list" class="tab-content" style="display:none;">
+
+<h2>Liste Eleves</h2>
+
+<table>
+
+<tr>
+
+<th>Nom</th>
+<th>Postnom</th>
+<th>Prenom</th>
+<th>Classe</th>
+<th>Section</th>
+<th>Frais</th>
+
+</tr>
+
+{% for e in eleves %}
+
+<tr>
+
+<td>{{ e.nom }}</td>
+<td>{{ e.postnom }}</td>
+<td>{{ e.prenom }}</td>
+<td>{{ e.classe }}</td>
+<td>{{ e.section }}</td>
+<td>{{ e.frais_inscription }}</td>
+
+</tr>
+
+<tr>
+
+<td colspan="6">
+
+<a href="/edit/{{ e._id }}" class="btn btn-edit">
+Modifier
+</a>
+
+<a href="/delete/{{ e._id }}" class="btn btn-delete"
+onclick="return confirm('Supprimer cet eleve ?')">
+Supprimer
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
